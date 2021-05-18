@@ -127,7 +127,7 @@ class Password(object):
     def username(self):
         """ fetch the username from the api """
         return self.items["UserName"]
-    
+
     @property
     def title(self):
         """ fetch the title from the api """
