@@ -1,0 +1,22 @@
+name: linter
+on:
+  push
+
+jobs:
+  lint:
+    name: Lint code base
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: lint code base
+        uses: github/super-linter@v3
+        env:
+          DEFAULT_BRANCH: "main"
+          IGNORE_GITIGNORED_FILES: true
+          #VALIDATE_ALL_CODEBASE: false
+          VALIDATE_DOCKERFILE_HADOLINT: false #gives errors in pipeline, not locally
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        

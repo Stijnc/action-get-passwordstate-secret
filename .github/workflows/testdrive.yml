@@ -1,0 +1,25 @@
+name: Validate action
+
+on:
+  workflow_dispatch
+
+jobs:
+  validate_action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Use local my-action
+        id: testaction
+        uses: ./
+        with:
+          url: "https://krypto.dexmach.com"
+          token: ${{ secrets.PASSWORDSTATETOKEN }}
+          listId: 170
+          secrets: "az1,az2"
+      - name: echo
+        run: |
+          echo "output 1: ${{ steps.testaction.outputs.az1_username }} - ${{ steps.testaction.outputs.az1_password }}"
+          echo "output 2: ${{ steps.testaction.outputs.az2_username }} - ${{ steps.testaction.outputs.az2_password }}"
+          echo "env 1: $az1_username - $az1_password"
+          echo "env 2: $az2_username - $az2_password"

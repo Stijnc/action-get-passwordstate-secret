@@ -1,0 +1,33 @@
+# Make sure to change the action name here (must be unique).
+# Update the rest as needed.
+name: 'Passwordstate - Get secrets'
+description: 'Get secrets from Passwordstate and set as output variables'
+branding:
+  icon: 'unlock'
+  color: 'gray-dark'
+inputs:
+  url:  
+    description: 'The URL for the passwordstate endpoint'
+    required: true
+  token:
+    description: 'The Passwordstate API token'
+    required: true
+  listId:
+    description: 'The Passwordstate list id'
+    required: true
+  secrets:
+    description: 'A semicolon-separated list of secrets to retrieve. the secrets are match on name (title), update the match input to specify otherwise. These will automatically be converted to environmental variable keys.'
+    required: true
+  match:
+    description: 'The match field to search secrets for in passwordstate. Defaults to Title, other values include: id(passwordid), hostname, username, SiteId, siteLocation, .... See passwordstate help for more info'
+    required: false
+    default: 'Title'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.url }}
+    - ${{ inputs.token }}
+    - ${{ inputs.listId }}
+    - ${{ inputs.secrets }}
+    - ${{ inputs.match }}
